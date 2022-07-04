@@ -8,6 +8,26 @@ const REDIRECT_URI = process.env.REDIRECT_URI;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
+const getUserProfile = async (data) => {
+  const { access_token, token_type } = data;
+  try {
+    const response = await axios.get("https://api.spotify.com/v1/me", {
+      headers: {
+        Authorization: `${token_type} ${access_token}`,
+      },
+    });
+    return {
+      status: "ok",
+      data: response.data,
+    };
+  } catch (error) {
+    return {
+      status: "error",
+      data: response,
+    };
+  }
+};
+
 router.get("/", async (req, res) => {
   const code = req.query.code || null;
   const data = querystring.stringify({
@@ -28,7 +48,14 @@ router.get("/", async (req, res) => {
       { headers }
     );
     if (response.status === 200) {
-      res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
+      //res.send(response.data);
+      const { data, status } = await getUserProfile(response.data);
+      if (status === "error") {
+        res.send(data);
+      }
+      if (status === "ok") {
+        res.send(data);
+      }
     } else {
       res.send(response);
     }
