@@ -1,8 +1,40 @@
+require("dotenv").config();
+const axios = require("axios");
 const express = require("express");
 const router = express.Router();
+const querystring = require("querystring");
 
-router.get("/callback", (req, res) => {
-  res.send("callback");
+const REDIRECT_URI = process.env.REDIRECT_URI;
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+
+router.get("/", async (req, res) => {
+  const code = req.query.code || null;
+  const data = querystring.stringify({
+    grant_type: "authorization_code",
+    code: code,
+    redirect_uri: REDIRECT_URI,
+  });
+  const headers = {
+    "content-type": "application/x-www-form-urlencoded",
+    Authorization: `Basic ${new Buffer.from(
+      `${CLIENT_ID}:${CLIENT_SECRET}`
+    ).toString("base64")}`,
+  };
+  try {
+    const response = await axios.post(
+      "https://accounts.spotify.com/api/token",
+      data,
+      { headers }
+    );
+    if (response.status === 200) {
+      res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
+    } else {
+      res.send(response);
+    }
+  } catch (error) {
+    res.send(error);
+  }
 });
 
 module.exports = router;
