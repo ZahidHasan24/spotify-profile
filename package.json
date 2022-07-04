@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/ZahidHasan24/spotify-profile#readme",
   "dependencies": {
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "nodemon": "^2.0.18"
   }
