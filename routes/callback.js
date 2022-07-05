@@ -7,6 +7,7 @@ const querystring = require("querystring");
 const REDIRECT_URI = process.env.REDIRECT_URI;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const FRONTEND_URI = process.env.FRONTEND_URI;
 
 const getUserProfile = async (data) => {
   const { access_token, token_type } = data;
@@ -65,18 +66,16 @@ router.get("/", async (req, res) => {
       { headers }
     );
     if (response.status === 200) {
-      const { refresh_token } = response.data;
-      // const { data, status } = await getUserProfile(response.data);
-      // if (status === "error") {
-      //   res.send(data);
-      // }
-      // if (status === "ok") {
-      //   res.send(data);
-      // }
-      const { data } = await getRefreshToken(refresh_token);
-      res.send(`<pre>${JSON.stringify(data, null, 2)}</pre>`);
+      const { access_token, refresh_token, expires_in } = response.data;
+
+      const queryParams = querystring.stringify({
+        access_token,
+        refresh_token,
+        expires_in,
+      });
+      res.redirect(`${FRONTEND_URI}/?${queryParams}`);
     } else {
-      res.send(response);
+      res.redirect(`/?${querystring.stringify({ error: "invalid_token" })}`);
     }
   } catch (error) {
     res.send(error);
