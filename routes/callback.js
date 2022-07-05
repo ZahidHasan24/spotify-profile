@@ -28,6 +28,23 @@ const getUserProfile = async (data) => {
   }
 };
 
+const getRefreshToken = async (refresh_token) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:8000/refresh_token?refresh_token=${refresh_token}`
+    );
+    return {
+      status: "ok",
+      data: response.data,
+    };
+  } catch (error) {
+    return {
+      status: "error",
+      data: response,
+    };
+  }
+};
+
 router.get("/", async (req, res) => {
   const code = req.query.code || null;
   const data = querystring.stringify({
@@ -48,14 +65,16 @@ router.get("/", async (req, res) => {
       { headers }
     );
     if (response.status === 200) {
-      //res.send(response.data);
-      const { data, status } = await getUserProfile(response.data);
-      if (status === "error") {
-        res.send(data);
-      }
-      if (status === "ok") {
-        res.send(data);
-      }
+      const { refresh_token } = response.data;
+      // const { data, status } = await getUserProfile(response.data);
+      // if (status === "error") {
+      //   res.send(data);
+      // }
+      // if (status === "ok") {
+      //   res.send(data);
+      // }
+      const { data } = await getRefreshToken(refresh_token);
+      res.send(`<pre>${JSON.stringify(data, null, 2)}</pre>`);
     } else {
       res.send(response);
     }
