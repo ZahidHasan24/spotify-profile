@@ -1,5 +1,14 @@
 import { LOCALSTORAGE_KEYS, LOCALSTORAGE_VALUES } from "../localstorage";
 
+const hasTokenExpired = () => {
+  const { accessToken, timestamp, expireTime } = LOCALSTORAGE_VALUES;
+  if (!accessToken || !timestamp) {
+    return false;
+  }
+  const milliSecondsElapsed = Date.now() - Number(timestamp);
+  return milliSecondsElapsed / 1000 > Number(expireTime);
+};
+
 const getAccessToken = () => {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
@@ -44,7 +53,6 @@ const getAccessToken = () => {
 
   // We should never get here
   return false;
-
 };
 
 export const accessToken = getAccessToken();
