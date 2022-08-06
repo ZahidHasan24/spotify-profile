@@ -9,6 +9,37 @@ const hasTokenExpired = () => {
   return milliSecondsElapsed / 1000 > Number(expireTime);
 };
 
+const refreshToken = async () => {
+  try {
+    // Logout if there is no refresh token stored or we have managed to get into a reload infinite loop
+    if (
+      !LOCALSTORAGE_VALUES.refreshToken ||
+      LOCALSTORAGE_VALUES.refreshToken === "undefined" ||
+      Date.now() - Number(LOCALSTORAGE_VALUES.timestamp) / 1000 < 1000
+    ) {
+      console.error("No refresh token availabled");
+      logout();
+    }
+
+    // use `/refresh_token` endpoint from server
+    const { data } = await axios.get(
+      `/refresh_token?refresh_token=${LOCALSTORAGE_VALUES.refreshToken}`
+    );
+
+    // update localstorage values
+    window.localStorage.setItem(
+      LOCALSTORAGE_KEYS.accessToken,
+      data.accessToken
+    );
+    window.localStorage.setItem(LOCALSTORAGE_KEYS.timestamp, Date.now());
+
+    // reload the page for localsorage updated to be reflected
+    window.location.reload();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const getAccessToken = () => {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
