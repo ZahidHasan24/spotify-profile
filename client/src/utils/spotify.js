@@ -1,3 +1,4 @@
+import axios from "axios";
 import { LOCALSTORAGE_KEYS, LOCALSTORAGE_VALUES } from "../localstorage";
 
 const hasTokenExpired = () => {
@@ -38,6 +39,15 @@ const refreshToken = async () => {
   } catch (error) {
     console.error(error);
   }
+};
+
+const logout = () => {
+  // remove all localstorage items
+  for (const prop in LOCALSTORAGE_KEYS) {
+    window.localStorage.removeItem(LOCALSTORAGE_KEYS[prop]);
+  }
+  // Navigate to homepage
+  window.location = window.location.origin;
 };
 
 const getAccessToken = () => {
