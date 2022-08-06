@@ -41,7 +41,7 @@ const refreshToken = async () => {
   }
 };
 
-const logout = () => {
+export const logout = () => {
   // remove all localstorage items
   for (const prop in LOCALSTORAGE_KEYS) {
     window.localStorage.removeItem(LOCALSTORAGE_KEYS[prop]);
