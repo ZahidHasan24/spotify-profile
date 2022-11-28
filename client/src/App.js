@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { accessToken, logout } from "./utils/spotify";
 import { getCurrentUserProfile } from "./service";
 import { catchErrors } from "./utils/error";
-import "./App.css";
 import ScrollToTop from "./utils/ScrollToTop";
+import { StyledLoginButton, GlobalStyle } from "./styles";
 
 function App() {
   const [token, setToken] = useState(null);
@@ -22,11 +22,12 @@ function App() {
 
   return (
     <div className="App">
+      <GlobalStyle />
       <header className="App-header">
         {!token ? (
-          <a className="App-link" href="http://localhost:8000/login">
+          <StyledLoginButton href="http://localhost:8000/login">
             spotify login
-          </a>
+          </StyledLoginButton>
         ) : (
           <>
             <Router>
