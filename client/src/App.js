@@ -1,25 +1,17 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { accessToken, logout } from "./utils/spotify";
-import { getCurrentUserProfile } from "./service";
-import { catchErrors } from "./utils/error";
 import ScrollToTop from "./utils/ScrollToTop";
 import { GlobalStyle } from "./styles";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 
 function App() {
   const [token, setToken] = useState(null);
-  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     setToken(accessToken);
-    catchErrors(fetchData());
   }, []);
-
-  const fetchData = async () => {
-    const res = await getCurrentUserProfile();
-    setProfile(res.data);
-  };
 
   return (
     <div className="App">
@@ -29,6 +21,7 @@ function App() {
           <Login />
         ) : (
           <>
+            <button onClick={logout}>Logout</button>
             <Router>
               <ScrollToTop />
               <Switch>
@@ -45,17 +38,7 @@ function App() {
                   <h1>Playlists</h1>
                 </Route>
                 <Route path="/">
-                  <h1>Logged in!</h1>
-                  <button onClick={logout}>Log Out </button>
-                  {profile && (
-                    <div>
-                      <h1>{profile.display_name}</h1>
-                      <p>{profile.followers.total} followers</p>
-                      {profile.images.length && profile.images[0].url && (
-                        <img src={profile.images[0].url} alt="Avatar" />
-                      )}
-                    </div>
-                  )}
+                  <Profile />
                 </Route>
               </Switch>
             </Router>
