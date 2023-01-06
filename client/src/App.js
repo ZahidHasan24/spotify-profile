@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { accessToken, logout } from "./utils/spotify";
 import ScrollToTop from "./utils/ScrollToTop";
-import { GlobalStyle } from "./styles";
+import { GlobalStyle, StyledLogoutButton } from "./styles";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 
@@ -21,7 +21,7 @@ function App() {
           <Login />
         ) : (
           <>
-            <button onClick={logout}>Logout</button>
+            <StyledLogoutButton onClick={logout}>Logout</StyledLogoutButton>
             <Router>
               <ScrollToTop />
               <Switch>
