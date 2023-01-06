@@ -4,7 +4,8 @@ import { accessToken, logout } from "./utils/spotify";
 import { getCurrentUserProfile } from "./service";
 import { catchErrors } from "./utils/error";
 import ScrollToTop from "./utils/ScrollToTop";
-import { StyledLoginButton, GlobalStyle } from "./styles";
+import { GlobalStyle } from "./styles";
+import Login from "./pages/Login";
 
 function App() {
   const [token, setToken] = useState(null);
@@ -25,9 +26,7 @@ function App() {
       <GlobalStyle />
       <header className="App-header">
         {!token ? (
-          <StyledLoginButton href="http://localhost:8000/login">
-            spotify login
-          </StyledLoginButton>
+          <Login />
         ) : (
           <>
             <Router>
