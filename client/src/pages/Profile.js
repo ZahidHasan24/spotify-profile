@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
 import { catchErrors } from "../utils/error";
-import { getCurrentUserProfile, getCurrentUserPlaylists } from "../service";
+import {
+  getCurrentUserProfile,
+  getCurrentUserPlaylists,
+  getTopArtists,
+} from "../service";
 import { StyledHeader } from "../styles";
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [playlists, setPlaylists] = useState(null);
+  const [topArtists, setTopArtists] = useState(null);
 
   useEffect(() => {
     catchErrors(fetchData());
@@ -14,8 +19,10 @@ const Profile = () => {
   const fetchData = async () => {
     const userProfileRes = await getCurrentUserProfile();
     const userPlaylistsRes = await getCurrentUserPlaylists();
+    const userTopArtistsRes = await getTopArtists();
     setProfile(userProfileRes.data);
     setPlaylists(userPlaylistsRes.data);
+    setTopArtists(userTopArtistsRes.data);
   };
 
   return (
