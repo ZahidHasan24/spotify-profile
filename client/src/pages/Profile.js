@@ -6,6 +6,8 @@ import {
   getTopArtists,
 } from "../service";
 import { StyledHeader } from "../styles";
+import SectionWrapper from "../components/SectionWrapper";
+import ArtistsGrid from "../components/ArtistsGrid";
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
@@ -48,6 +50,16 @@ const Profile = () => {
             </div>
           </div>
         </StyledHeader>
+      )}
+      {topArtists && (
+        <main>
+          <SectionWrapper
+            title="Top Artists"
+            seeAllLink="/top-artists"
+          >
+            <ArtistsGrid artists={topArtists.items.slice(0, 10)} />
+          </SectionWrapper>
+        </main>
       )}
     </>
   );

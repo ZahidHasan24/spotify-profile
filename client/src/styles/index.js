@@ -4,4 +4,10 @@ import StyledHeader from "./StyledHeader";
 import StyledGrid from "./StyledGrid";
 import StyledSection from "./StyledSection";
 
-export { GlobalStyle, StyledLogoutButton, StyledHeader, StyledGrid };
+export {
+  GlobalStyle,
+  StyledLogoutButton,
+  StyledHeader,
+  StyledGrid,
+  StyledSection,
+};
