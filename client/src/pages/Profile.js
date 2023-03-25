@@ -10,6 +10,7 @@ import { StyledHeader } from "../styles";
 import SectionWrapper from "../components/SectionWrapper";
 import ArtistsGrid from "../components/ArtistsGrid";
 import TrackList from "../components/TrackList";
+import PlaylistsGrid from "../components/PlayListsGrid";
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
@@ -56,13 +57,16 @@ const Profile = () => {
           </div>
         </StyledHeader>
       )}
-      {topArtists && topTracks && (
+      {topArtists && topTracks && playlists && (
         <main>
           <SectionWrapper title="Top Artists" seeAllLink="/top-artists">
             <ArtistsGrid artists={topArtists.items.slice(0, 10)} />
           </SectionWrapper>
           <SectionWrapper title="Top Tracks" seeAllLink="/top-tracks">
             <TrackList tracks={topTracks.items.slice(0, 10)} />
+          </SectionWrapper>
+          <SectionWrapper title="Public Playlists" seeAllLink="/playlists">
+            <PlaylistsGrid playlists={playlists.items.slice(0, 10)} />
           </SectionWrapper>
         </main>
       )}
