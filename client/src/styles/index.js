@@ -3,6 +3,7 @@ import StyledLogoutButton from "./StyledLogoutButton";
 import StyledHeader from "./StyledHeader";
 import StyledGrid from "./StyledGrid";
 import StyledSection from "./StyledSection";
+import StyledTrackList from "./StyledTrackList";
 
 export {
   GlobalStyle,
@@ -10,4 +11,5 @@ export {
   StyledHeader,
   StyledGrid,
   StyledSection,
+  StyledTrackList
 };

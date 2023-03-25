@@ -4,15 +4,18 @@ import {
   getCurrentUserProfile,
   getCurrentUserPlaylists,
   getTopArtists,
+  getTopTracks,
 } from "../service";
 import { StyledHeader } from "../styles";
 import SectionWrapper from "../components/SectionWrapper";
 import ArtistsGrid from "../components/ArtistsGrid";
+import TrackList from "../components/TrackList";
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [playlists, setPlaylists] = useState(null);
   const [topArtists, setTopArtists] = useState(null);
+  const [topTracks, setTopTracks] = useState(null);
 
   useEffect(() => {
     catchErrors(fetchData());
@@ -22,9 +25,11 @@ const Profile = () => {
     const userProfileRes = await getCurrentUserProfile();
     const userPlaylistsRes = await getCurrentUserPlaylists();
     const userTopArtistsRes = await getTopArtists();
+    const userTopTracksRes = await getTopTracks();
     setProfile(userProfileRes.data);
     setPlaylists(userPlaylistsRes.data);
     setTopArtists(userTopArtistsRes.data);
+    setTopTracks(userTopTracksRes.data);
   };
 
   return (
@@ -51,13 +56,13 @@ const Profile = () => {
           </div>
         </StyledHeader>
       )}
-      {topArtists && (
+      {topArtists && topTracks && (
         <main>
-          <SectionWrapper
-            title="Top Artists"
-            seeAllLink="/top-artists"
-          >
+          <SectionWrapper title="Top Artists" seeAllLink="/top-artists">
             <ArtistsGrid artists={topArtists.items.slice(0, 10)} />
+          </SectionWrapper>
+          <SectionWrapper title="Top Tracks" seeAllLink="/top-tracks">
+            <TrackList tracks={topTracks.items.slice(0, 10)} />
           </SectionWrapper>
         </main>
       )}
