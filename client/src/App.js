@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { accessToken, logout } from "./utils/spotify";
-import ScrollToTop from "./utils/ScrollToTop";
 import { GlobalStyle, StyledLogoutButton } from "./styles";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
+import TopArtists from "./pages/TopArtists";
 
 function App() {
   const [token, setToken] = useState(null);
@@ -22,26 +22,12 @@ function App() {
         ) : (
           <>
             <StyledLogoutButton onClick={logout}>Logout</StyledLogoutButton>
-            <Router>
-              <ScrollToTop />
-              <Switch>
-                <Route path="/top-artists">
-                  <h1>Top Artists</h1>
-                </Route>
-                <Route path="/top-tracks">
-                  <h1>Top Tracks</h1>
-                </Route>
-                <Route path="/playlists/:id">
-                  <h1>Playlist</h1>
-                </Route>
-                <Route path="/playlists">
-                  <h1>Playlists</h1>
-                </Route>
-                <Route path="/">
-                  <Profile />
-                </Route>
-              </Switch>
-            </Router>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Profile />} />
+                <Route path="/top-artists" element={<TopArtists />} />
+              </Routes>
+            </BrowserRouter>
           </>
         )}
       </header>
