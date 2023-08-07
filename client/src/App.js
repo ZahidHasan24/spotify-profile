@@ -5,6 +5,7 @@ import { GlobalStyle, StyledLogoutButton } from "./styles";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import TopArtists from "./pages/TopArtists";
+import TopTracks from "./pages/TopTracks";
 
 function App() {
   const [token, setToken] = useState(null);
@@ -26,6 +27,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Profile />} />
                 <Route path="/top-artists" element={<TopArtists />} />
+                <Route path="/top-tracks" element={<TopTracks />} />
               </Routes>
             </BrowserRouter>
           </>
