@@ -7,6 +7,7 @@ import Profile from "./pages/Profile";
 import TopArtists from "./pages/TopArtists";
 import TopTracks from "./pages/TopTracks";
 import Playlists from "./pages/Playlists";
+import Playlist from "./pages/Playlist";
 
 function App() {
   const [token, setToken] = useState(null);
@@ -30,6 +31,7 @@ function App() {
                 <Route path="/top-artists" element={<TopArtists />} />
                 <Route path="/top-tracks" element={<TopTracks />} />
                 <Route path="/playlists" element={<Playlists />} />
+                <Route path="/playlists/:id" element={<Playlist />} />
               </Routes>
             </BrowserRouter>
           </>

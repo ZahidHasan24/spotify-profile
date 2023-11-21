@@ -5,6 +5,7 @@ import StyledGrid from "./StyledGrid";
 import StyledSection from "./StyledSection";
 import StyledTrackList from "./StyledTrackList";
 import StyledRangeButtons from "./StyledRangeButtons";
+import StyledDropdown from "./StyledDropdown";
 
 export {
   GlobalStyle,
@@ -14,4 +15,5 @@ export {
   StyledSection,
   StyledTrackList,
   StyledRangeButtons,
+  StyledDropdown
 };
